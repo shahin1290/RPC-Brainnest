@@ -101,10 +101,10 @@ const gameInstructions =
   "\n" +
   " - The game has total 5 rounds" +
   "\n" +
-  " - The final result will be calculated based on these 5 rounds" +
+  " - Press F12 on your pc and go the Console tab" +
   "\n" +
-  " - Press F12 on your pc and see the results in the Console tab";
+  " - Type game() to start the game";
 
 alert(gameInstructions);
 
-game();
+// game();
