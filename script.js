@@ -103,7 +103,9 @@ const gameInstructions =
   "\n" +
   " - Press F12 on your pc and go the Console tab" +
   "\n" +
-  " - Type game() to start the game";
+  " - Type game() and hit enter to start the game" +
+  "\n" +
+  " - You can cancel the game at any time";
 
 alert(gameInstructions);
 
