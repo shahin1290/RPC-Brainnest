@@ -1,6 +1,6 @@
 function computerPlay() {
-  let randomNumber = Math.floor(Math.random() * 3 + 1);
-  let computerSelection =
+  const randomNumber = Math.floor(Math.random() * 3 + 1);
+  const computerSelection =
     randomNumber === 1 ? "rock" : randomNumber === 2 ? "paper" : "scissors";
   return computerSelection;
 }
