@@ -6,34 +6,24 @@ function computerPlay() {
 }
 
 function playerPlay(round) {
-  let playerInput = prompt(
-    `Round ${round + 1}: Type Rock, Paper, or Scissors`,
-    "rock"
-  );
-  if (playerInput == null) {
-    return "cancelled";
-  }
-  let isInputValid = validateInput(playerInput);
-  while (!isInputValid) {
-    playerInput = prompt(
-      "🚫 Wrong input! Please type Rock, Paper, or Scissors, no capitilization required",
-      "rock"
-    );
-    if (playerInput == null) {
-      return "cancelled";
-    }
-    isInputValid = validateInput(playerInput);
-  }
-  return playerInput.trim().toLocaleLowerCase();
-}
+  let promptMessage = `Round ${round + 1}: Type Rock, Paper, or Scissors`;
+  let isChecked = false;
+  while (!isChecked) {
+    let playerInput = prompt(promptMessage, "rock");
+    const sanitizedPlayerInput =
+      playerInput && playerInput.trim().toLowerCase();
 
-function validateInput(playerInput) {
-  const sanitizedPlayerInput = playerInput.trim().toLocaleLowerCase();
-  return (
-    sanitizedPlayerInput === "rock" ||
-    sanitizedPlayerInput === "paper" ||
-    sanitizedPlayerInput === "scissors"
-  );
+    if (["rock", "paper", "scissors"].includes(sanitizedPlayerInput)) {
+      isChecked = true;
+      return sanitizedPlayerInput;
+    } else if (playerInput === null) {
+      isChecked = true;
+      return "cancelled";
+    } else {
+      promptMessage =
+        "🚫 Wrong input! Please type Rock, Paper, or Scissors, no capitilization required";
+    }
+  }
 }
 
 function playRound(playerSelection, computerSelection) {
