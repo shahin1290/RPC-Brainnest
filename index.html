@@ -4,8 +4,54 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/713945395b.js"
+      crossorigin="anonymous"
+    ></script>
     <script defer src="./script.js"></script>
+    <link rel="stylesheet" href="style.css" />
     <title>Rock-Papper-Scissors</title>
   </head>
-  <body></body>
+  <body>
+    <header class="title-header">ROCK PAPER SCISSORS</header>
+    <main>
+      <section class="instructions">
+        <h2 class="pick-text">Choose your weapon</h2>
+        <i class="fa-duotone fa-sword"></i>
+        <p class="rules">Rules: First to win 5 points, wins the WAR!!</p>
+      </section>
+      <section class="buttons">
+        <button class="scissors">
+          <i class="fa-regular fa-hand-scissors fa-4x"></i>
+        </button>
+        <button class="rock">
+          <i class="fa-regular fa-hand-back-fist fa-4x"></i>
+        </button>
+        <button class="paper"><i class="fa-regular fa-hand fa-4x"></i></button>
+      </section>
+      <section class="scores">
+        <div class="score player">
+          <p class="score-tit your">YOUR SCORE</p>
+          <p class="score-n-player">0</p>
+        </div>
+        <div class="score-text">?</div>
+        <div class="score compu">
+          <p class="score-tit">COMPUTER SCORE</p>
+          <p class="score-n-compu">0</p>
+        </div>
+      </section>
+    </main>
+
+    <aside>
+      <div class="modal">
+        <h2 class="modal-text"></h2>
+        <button class="close-modal">Play again!</button>
+      </div>
+      <div class="overlay"></div>
+    </aside>
+
+    <footer>
+      <p>Copyright &#169; 2023 RPS</p>
+    </footer>
+  </body>
 </html>

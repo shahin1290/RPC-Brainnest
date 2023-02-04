@@ -1,102 +1,111 @@
-function computerPlay() {
-  const randomNumber = Math.floor(Math.random() * 3 + 1);
-  const computerSelection =
-    randomNumber === 1 ? "rock" : randomNumber === 2 ? "paper" : "scissors";
-  return computerSelection;
+const results = document.querySelector(".score-text");
+let scorePlayer = 0;
+let scoreCompu = 0;
+const scorePlayerN = document.querySelector(".score-n-player");
+const scoreCompuN = document.querySelector(".score-n-compu");
+const scissorsBtn = document.querySelector(".scissors");
+const paperBtn = document.querySelector(".paper");
+const rockBtn = document.querySelector(".rock");
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const closeModal = document.querySelector(".close-modal");
+const modalText = document.querySelector(".modal-text");
+
+// generate a random choice from the computer
+
+function compuChoice() {
+  const choices = ["paper", "scissors", "rock"];
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  const randomSelection = choices[randomIndex];
+  return randomSelection;
 }
 
-function playerPlay(round) {
-  let promptMessage = `Round ${round + 1}: Type Rock, Paper, or Scissors`;
-  let isChecked = false;
-  while (!isChecked) {
-    let playerInput = prompt(promptMessage, "rock");
-    const sanitizedPlayerInput =
-      playerInput && playerInput.trim().toLowerCase();
+// restart Game
 
-    if (["rock", "paper", "scissors"].includes(sanitizedPlayerInput)) {
-      isChecked = true;
-      return sanitizedPlayerInput;
-    } else if (playerInput === null) {
-      isChecked = true;
-      return "cancelled";
-    } else {
-      promptMessage =
-        "🚫 Wrong input! Please type Rock, Paper, or Scissors, no capitilization required";
-    }
-  }
+function restartgame() {
+  scoreCompu = 0;
+  scorePlayer = 0;
+  scorePlayerN.textContent = 0;
+  scoreCompuN.textContent = 0;
+  results.textContent = "";
 }
+
+// open modal
+
+const openModal = function () {
+  modal.classList.add("active");
+  overlay.classList.add("active");
+};
+
+// close modal
+
+closeModal.addEventListener("click", () => {
+  modal.classList.remove("active");
+  overlay.classList.remove("active");
+  restartgame();
+});
+
+// One Round
 
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
-    return "tie";
-  } else if (
-    (playerSelection === "rock" && computerSelection == "scissors") ||
-    (playerSelection === "paper" && computerSelection == "rock") ||
-    (playerSelection === "scissors" && computerSelection == "paper")
-  ) {
-    return "win";
-  } else {
-    return "lose";
+    results.textContent = "Drow!!Try again";
+  }
+  if (playerSelection === "rock" && computerSelection === "scissors") {
+    results.textContent = "YOU WIN";
+    scorePlayer += 1;
+    scorePlayerN.textContent = scorePlayer;
+  }
+  if (playerSelection === "rock" && computerSelection === "paper") {
+    results.textContent = "Sorry! You have lost, try again!!";
+    scoreCompu += 1;
+    scoreCompuN.textContent = scoreCompu;
+  }
+  if (playerSelection === "scissors" && computerSelection === "paper") {
+    results.textContent = "YOU WIN";
+    scorePlayer += 1;
+    scorePlayerN.textContent = scorePlayer;
+  }
+  if (playerSelection === "scissors" && computerSelection === "rock") {
+    results.textContent = "Sorry! You have lost, try again!!";
+    scoreCompu += 1;
+    scoreCompuN.textContent = scoreCompu;
+  }
+  if (playerSelection === "paper" && computerSelection === "scissors") {
+    results.textContent = "Sorry! You have lost, try again!!";
+    scoreCompu += 1;
+    scoreCompuN.textContent = scoreCompu;
+  }
+  if (playerSelection === "paper" && computerSelection === "rock") {
+    results.textContent = "YOU WIN";
+    scorePlayer += 1;
+    scorePlayerN.textContent = scorePlayer;
   }
 }
+// GAME: score until 5
 
-function game() {
-  let playerScore = 0;
-  let computerScore = 0;
-
-  for (let round = 0; round < 5; round++) {
-    const playerSelection = playerPlay(round);
-    if (playerSelection === "cancelled") {
-      console.log("Sorry to see you go 😞");
-      break;
-    }
-    const computerSelection = computerPlay();
-    const result = playRound(playerSelection, computerSelection);
-
-    if (result == "win") {
-      console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-      playerScore++;
-    } else if (result == "lose") {
-      console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-      computerScore++;
-    } else {
-      console.log(`Tie! You and the computer played ${computerSelection}`);
-    }
-    console.log(
-      `Round: ${
-        round + 1
-      } | Player score: ${playerScore} | Computer score: ${computerScore}`
-    );
-    console.log("-------------------------------");
-
-    if (round === 4) {
-      console.log("######################################");
-
-      const finalResult =
-        playerScore > computerScore
-          ? "Hurray! You have won 🏆"
-          : playerScore === computerScore
-          ? "It's tie 😐"
-          : "Sorry! You have lost 😟";
-      console.log(`Final result: ${finalResult}`);
-      console.log("######################################");
-    }
+function game(playerSelection, computerSelection) {
+  playRound(playerSelection, computerSelection);
+  if (scoreCompu === 5) {
+    openModal();
+    modalText.textContent =
+      "Sorry, The Machine has riched 5 points.YOU HAVE LOST";
+  }
+  if (scorePlayer === 5) {
+    openModal();
+    modalText.textContent =
+      "CONGRATULATIONS!!You have riched 5 points. YOU HAVE WIN!!";
   }
 }
+// Players choice function
 
-const gameInstructions =
-  "ROCK PAPER SCISSORS : Please follow the following instructions:" +
-  "\n" +
-  " - You are going to play against the computer" +
-  "\n" +
-  " - The game has total 5 rounds" +
-  "\n" +
-  " - Press F12 on your pc and go the Console tab" +
-  "\n" +
-  " - Type game() and hit enter to start the game" +
-  "\n" +
-  " - You can cancel the game at any time";
+const playerChoice = function (choice) {
+  const computerSelection = compuChoice();
+  game(choice, computerSelection);
+};
 
-alert(gameInstructions);
+// Add event to weapon buttons
 
-// game();
+scissorsBtn.addEventListener("click", () => playerChoice("scissors"));
+paperBtn.addEventListener("click", () => playerChoice("paper"));
+rockBtn.addEventListener("click", () => playerChoice("rock"));
